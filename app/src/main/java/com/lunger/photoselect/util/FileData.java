@@ -78,12 +78,12 @@ public class FileData {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
         ContentResolver contentResolver = context.getContentResolver();
-        Cursor cursor = contentResolver.query(uri, null, null, null, null);
+        //最后的参数是按时间倒序查找
+        Cursor cursor = contentResolver.query(uri, null, null, null, MediaStore.Images.Media.DATE_TAKEN + " DESC ");
         if (cursor == null || cursor.getCount() <= 0) return null; // 没有图片
         AlbumBean entity;
         while (cursor.moveToNext()) {
-            int index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             String path = cursor.getString(index); // 文件地址
             File file = new File(path);
             if (file.exists()) {
