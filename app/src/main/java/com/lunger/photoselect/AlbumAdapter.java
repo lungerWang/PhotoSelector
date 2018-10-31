@@ -40,14 +40,21 @@ public class AlbumAdapter extends BaseMultiItemQuickAdapter<AlbumBean, BaseViewH
         if (bean.getItemType() == TYPE_CAMERA) {
             iv_pic.setImageResource(R.mipmap.def_reply_camera);
         } else {
-            String path = bean.getPath();
-            if (!TextUtils.isEmpty(path)) {
-                Glide.with(mContext).load(path).asBitmap().into(iv_pic);
-            } else {
-                iv_pic.setImageBitmap(null);
-            }
             //标号数字
             TextView tv_number = (TextView) helper.getView(R.id.tv_number);
+
+            //加载图片
+            String path = bean.getPath();
+            if(!path.equals(tv_number.getTag())){
+                if (!TextUtils.isEmpty(path)) {
+                    Glide.with(mContext).load(path).asBitmap().into(iv_pic);
+                } else {
+                    iv_pic.setImageBitmap(null);
+                }
+                tv_number.setTag(path);
+            }
+
+            //标号控制
             if(mSelectList == null || mSelectList.size() == 0 || !mSelectList.contains(path)){
                 tv_number.setText("");
                 tv_number.setBackgroundResource(R.mipmap.def_reply_default);

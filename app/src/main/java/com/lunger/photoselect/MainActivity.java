@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initWidget() {
         mAlbumAdapter = new AlbumAdapter(dataList, mAlbumSelector.getSelectList());
+        mAlbumAdapter.setHasStableIds(true);
         rlv_album.setLayoutManager(new GridLayoutManager(this, 3));
         rlv_album.setAdapter(mAlbumAdapter);
         rlv_album.addItemDecoration(new DividerGridItemDecoration(this, 6, Color.parseColor("#ffffff")));
