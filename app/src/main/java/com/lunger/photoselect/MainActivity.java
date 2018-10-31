@@ -19,6 +19,7 @@ import com.lunger.photoselect.permission.PermissionManage;
 import com.lunger.photoselect.util.AlbumHelper;
 import com.lunger.photoselect.util.AlbumSelector;
 import com.lunger.photoselect.util.DividerGridItemDecoration;
+import com.lunger.photoselect.util.FileData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         //初始化相冊幫助類
-        AlbumHelper helper = AlbumHelper.getHelper();
+        /*AlbumHelper helper = AlbumHelper.getHelper();
         helper.init(this);
 
-        dataList = helper.getAllPicPath();
+        dataList = helper.getAllPicPath();*/
+        dataList = FileData.getSystemPhotoList(this);
         //第一个位置加占位
         dataList.add(0, new AlbumBean());
     }
@@ -83,9 +85,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("wbl", "position = " + position);
                 Log.d("wbl", "path = " + dataList.get(position).getPath());
                 if (position != 0) {
+                    //点击图片
                     int result = mAlbumSelector.addOrRemove(dataList.get(position).getPath());
                     if(result == AlbumSelector.STATUS_ADD_SUCCESS || result == AlbumSelector.STATUS_REMOVE_SUCCESS){
                         mAlbumAdapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(MainActivity.this, "图片不能超过9张", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    //点击拍照
+                    if(mAlbumSelector.getSelectList().size() >= 9){
+                        Toast.makeText(MainActivity.this, "图片不能超过9张", Toast.LENGTH_SHORT).show();
+                    }else{
+                        //跳转拍照界面
                     }
                 }
             }
