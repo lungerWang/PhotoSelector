@@ -1,5 +1,6 @@
 package com.lunger.photoselect;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.lunger.photoselect.permission.PermissionListener;
 import com.lunger.photoselect.permission.PermissionManage;
 import com.lunger.photoselect.util.AlbumHelper;
 import com.lunger.photoselect.util.AlbumSelector;
+import com.lunger.photoselect.util.CameraHelper;
 import com.lunger.photoselect.util.DividerGridItemDecoration;
 import com.lunger.photoselect.util.FileData;
 
@@ -35,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     //相册列表
     public List<AlbumBean> dataList;
     private AlbumAdapter mAlbumAdapter;
-    //选中的图片
-    private List<String> selectList = new ArrayList<>();
+    private CameraHelper mCameraHelper = new CameraHelper(this);
+
     private AlbumSelector mAlbumSelector = new AlbumSelector();
 
     @Override
@@ -98,10 +100,30 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "图片不能超过9张", Toast.LENGTH_SHORT).show();
                     }else{
                         //跳转拍照界面
+                        mCameraHelper.goCamera();
                     }
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 10001:
+                    mCameraHelper.scanFile();
+                    AlbumBean albumBean = new AlbumBean();
+                    albumBean.setItemType(1);
+                    albumBean.setPath(mCameraHelper.getPath());
+                    dataList.add(1, albumBean);
+                    mAlbumSelector.addOrRemove(mCameraHelper.getPath());
+                    mAlbumAdapter.notifyDataSetChanged();
+                    break;
+            }
+
+        }
     }
 
 
@@ -122,4 +144,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
 }
