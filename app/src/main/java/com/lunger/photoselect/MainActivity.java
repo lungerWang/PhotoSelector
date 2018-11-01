@@ -2,28 +2,24 @@ package com.lunger.photoselect;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lunger.photoselect.bean.AlbumBean;
-import com.lunger.photoselect.bean.ImageBucket;
 import com.lunger.photoselect.permission.PermissionListener;
 import com.lunger.photoselect.permission.PermissionManage;
-import com.lunger.photoselect.util.AlbumHelper;
 import com.lunger.photoselect.util.AlbumSelector;
 import com.lunger.photoselect.util.CameraHelper;
 import com.lunger.photoselect.util.DividerGridItemDecoration;
 import com.lunger.photoselect.util.FileData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private AlbumAdapter mAlbumAdapter;
     private CameraHelper mCameraHelper = new CameraHelper(this);
 
-    private AlbumSelector mAlbumSelector = new AlbumSelector();
+    private AlbumSelector mAlbumSelector = new AlbumSelector(9);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,9 +14,14 @@ public class AlbumSelector {
     public static final int STATUS_ADD_FAILED = 1;
     //删除成功
     public static final int STATUS_REMOVE_SUCCESS = 2;
+    private int maxLength;
 
     //选中的图片
     private LinkedList<String> selectList = new LinkedList<>();
+
+    public AlbumSelector(int maxLength){
+        this.maxLength = maxLength;
+    }
 
     /**
      *
@@ -29,7 +34,7 @@ public class AlbumSelector {
             selectList.remove(path);
             return STATUS_REMOVE_SUCCESS;
         }else{
-            if(selectList.size() >= 9){
+            if(selectList.size() >= maxLength){
                 return STATUS_ADD_FAILED;
             }else{
                 selectList.addLast(path);
