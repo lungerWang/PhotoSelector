@@ -56,7 +56,7 @@ public class CameraHelper {
     }
 
     private String getPhotoName() {
-        return Calendar.getInstance().getTimeInMillis() + ".jpg";
+        return Calendar.getInstance().getTimeInMillis() + ".JPEG";
     }
 
     public static String getRootDir() {

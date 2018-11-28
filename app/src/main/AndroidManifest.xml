@@ -45,16 +45,25 @@
         </activity>
 
 
-        <!--兼容android7.0以上，apk安装-->
+        <!--&lt;!&ndash;兼容android7.0以上，apk安装&ndash;&gt;-->
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="bk.androidreader1.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--&lt;!&ndash;元数据&ndash;&gt;-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/file_paths"/>-->
+        <!--</provider>-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="bk.androidreader1.fileprovider"
+            android:name=".PictureFileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <!--元数据-->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 
